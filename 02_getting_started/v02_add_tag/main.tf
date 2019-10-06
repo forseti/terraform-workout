@@ -2,10 +2,11 @@ provider "aws" {
   region = "us-east-2"
 }
 
-resource "aws_instance" "example" {
+resource "aws_instance" "example-instance" {
   ami = "ami-0c55b159cbfafe1f0"
   instance_type = "t2.micro"
+  
   tags = {
-    Name = "terraform-example"
+    Name = "terraform-example-instance"
   }
 }
