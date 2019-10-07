@@ -93,7 +93,7 @@ terraform plan <DIR_OR_PLAN> -var "<VARIABLE_NAME>=<VALUE>"
 ```
 
 Example:
-```
+```console
 terraform plan 05_deploy_configurable_web_server -var "server_port=8080"
 ```
 

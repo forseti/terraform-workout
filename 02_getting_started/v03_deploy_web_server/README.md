@@ -1,5 +1,5 @@
 #### v03_deploy_web_server ####
-Add the web server using `user_data` to our EC2 instance, `example-instance`:
+Add the web server using `user_data` to our EC2 instance, `example-i`:
 ```
 user_data = <<-EOF
             #!/bin/bash
@@ -11,7 +11,7 @@ user_data = <<-EOF
 
 After the edit:
 ```hcl
-resource "aws_instance" "example-instance" {
+resource "aws_instance" "example-i" {
 	ami = "ami-0c55b159cbfafe1f0"
 	instance_type = "t2.micro"
 
@@ -48,7 +48,7 @@ Next, use *resource attribute reference* so that our EC2 instance, `example-inst
 
 After the edit:
 ```hcl
-resource "aws_instance" "example-instance" {
+resource "aws_instance" "example-i" {
 	ami = "ami-0c55b159cbfafe1f0"
 	instance_type = "t2.micro"
 

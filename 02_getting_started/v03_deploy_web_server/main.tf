@@ -13,7 +13,7 @@ resource "aws_security_group" "example-sg" {
   }
 }
 
-resource "aws_instance" "example-instance" {
+resource "aws_instance" "example-i" {
   ami = "ami-0c55b159cbfafe1f0"
   instance_type = "t2.micro"
 

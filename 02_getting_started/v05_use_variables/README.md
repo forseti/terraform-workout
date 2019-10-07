@@ -1,8 +1,8 @@
 #### v05_use_variables ####
 
-In this chapter, we are going to use variables `variable` and `output`
+We can use variables `variable` and `output` to simplify our configurations.
 
-#### Input variables (`variable`) ####
+##### Input variables (`variable`) #####
 To define an input `variable`, use the following syntax:
 ```hcl
 variable "<NAME>" {
@@ -78,7 +78,7 @@ variable "object_example" {
 }
 ```
 
-##### Add an input variable to our project #####
+###### Add an input variable to our project ######
 Define a variable `server_port` for our `main.tf`:
 ```hcl
 variable "server_port" {
@@ -137,7 +137,7 @@ ${VARIABLE_NAME}
 ```
 
 ```hcl
-resource "aws_instance" "example-instance" {
+resource "aws_instance" "example-i" {
   ami = "ami-0c55b159cbfafe1f0"
   instance_type = "t2.micro"
 
@@ -155,7 +155,7 @@ resource "aws_instance" "example-instance" {
 }
 ```
 
-#### Output variables (`output`) ####
+##### Output variables (`output`) #####
 We can also define an `output` variable:
 ```hcl
 output "<NAME>" {
@@ -171,11 +171,11 @@ The body of the `output` declaration (`<CONFIG`) has two parameters:
 | *description*    | A description of the type of the output |
 | *sensitive* | If this parameter is set to true, Terraform will not log this output |
 
-##### Add an output variable to our project #####
+###### Add an output variable to our project ######
 Add an `output` variable to our `main.tf`:
 ```hcl
 output "public_ip" {
-  value = aws_instance.example-instance.public_ip
+  value = aws_instance.example-i.public_ip
   description = "The public IP address of the web server"
 }
 ```
