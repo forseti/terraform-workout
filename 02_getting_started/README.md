@@ -195,12 +195,14 @@ The body of the `output` declaration (`<CONFIG`) has two parameters:
 | *description*    | A description of the type of the output |
 | *sensitive* | If this parameter is set to true, Terraform will not log this output |
 
-After `terraform apply`, we can use the following command to display the `output`
+After adding an `output` and running `terraform apply`, we can use the following command to display the `output`
 ```console
 terraform output
 terraform output <OUTPUT_NAME>
 ```
 
+For example
 ```console
+terraform apply v06_add_output
 terraform output public_ip
 ```
