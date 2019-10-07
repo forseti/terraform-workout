@@ -135,7 +135,7 @@ terraform output <OUTPUT_NAME>
 
 Example:
 ```console
-terraform apply v06_add_output
+terraform apply v05_use_variables
 ```
 
 ```console

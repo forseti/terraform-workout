@@ -41,7 +41,7 @@ resource "aws_security_group" "example-sg" {
 }
 ```
 
-Next, use *resource attribute reference* so that our EC2 instance, `example-instance`, can refer to our *security group* resource. The syntax:
+Next, use *resource attribute reference* so that our EC2 instance, `example-i`, can refer to our *security group* resource. The syntax:
 ```hcl
 <PROVIDER>_<TYPE>.<NAME>.<ATTRIBUTE>
 ```

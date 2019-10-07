@@ -20,7 +20,7 @@ resource "aws_security_group" "example-sg" {
 }
 
 /*
-resource "aws_instance" "example-instance" {
+resource "aws_instance" "example-i" {
   ami = "ami-0c55b159cbfafe1f0"
   instance_type = "t2.micro"
 
@@ -38,7 +38,7 @@ resource "aws_instance" "example-instance" {
 }
 
 output "public_ip" {
-  value = aws_instance.example-instance.public_ip
+  value = aws_instance.example-i.public_ip
   description = "The public IP address of the web server"
 }
 */
