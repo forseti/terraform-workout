@@ -8,39 +8,51 @@ export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
 #### Initialize a Terraform project ####
 ```console
 terraform init
+```
+
+```console
 terraform init <DIR_OR_PLAN>
 ```
 
 Example:
 ```console
-terraform init v01_setup
+terraform init v01_initial
 ```
 
 #### Run the plan (preview) ####
 ```console
 terraform plan
+```
+
+```console
 terraform plan <DIR_OR_PLAN>
 ```
 
 Example:
 ```console
-terraform plan v01_setup
+terraform plan v01_initial
 ```
 
 #### Apply the changes ####
 ```console
 terraform apply
+```
+
+```console
 terraform apply <DIR_OR_PLAN>
 ```
 
 Example:
 ```console
-terraform apply v01_setup
+terraform apply v01_initial
 ```
 
 #### To display the graph (*DOT* format) ####
 ```console
 terraform graph
+```
+
+```console
 terraform graph <DIR_OR_PLAN>
 ```
 
@@ -70,89 +82,13 @@ digraph {
 
 The `digraph` value can be visualized in an online tool like [GraphvizOnline](http://dreampuf.github.io/GraphvizOnline/)
 
-#### Input variables ####
-To define a variable, use the following syntax:
-```hcl
-variable "<NAME>" {
-	[<CONFIG> ...]
-}
-```
 
-The body of the `variable` declaration (`<CONFIG`) has three parameters:
-
-| Parameter | Description |
-|---------- |-|
-| *description*    | A description on how a variable is used |
-| *type* | The *type constraints* of a variable |
-| *default* | There are two ways to provide a value for a variable, `-var`, `-var-file`, and an environment variable `TF_FAR_<VARIABLE_NAME>`. If no value is passed in, the variable will fall back to this default value | 
-
-An example of a number:
-```hcl
-variable "number_example" {
-	description = "An example of a number"
-	type = number
-	default = 123
-}
-
-```
-
-An example of a list:
-```hcl
-variable "list_example" {
-	description = "An example of a list"
-	type = list
-	default = ['one', 'two', 'three']
-}
-```
-
-An example of a list of numerics:
-```hcl
-variable "list_numeric_example" {
-	description = "An example of a list of numerics"
-	type = list(number)
-	default = [1, 2, 3]
-}
-```
-
-An example of a map:
-```hcl
-variable "map_example" {
-	description = "An example of a map"
-	type = map(string)
-	default = {
-		key1 = "value1"
-		key2 = "value2"
-		key3 = "value3"
-	}
-}
-```
-
-An example of an object:
-```hcl
-variable "object_example" {
-	description = "An example of an object"
-	type = object({
-		name = string
-		age = number
-		tags = list(string)
-		enabled = bool
-	})
-	default = {
-		name = "object_1"
-		age = 1
-		tags = ["o", "n", "e"]
-		enabled = true
-	}
-}
-```
-
-##### Input variable prompt #####
-If there is no `default` value, running a command like `terraform apply` or `terraform plan` will prompt you to enter a value.
-
-##### Using `-var` #####
-One way to provide a value is to use `-var`:
+#### Provide values using `-var` ####
 ```console
 terraform plan -var "<VARIABLE_NAME>=<VALUE>"
+```
+
+```console
 terraform plan <DIR_OR_PLAN> -var "<VARIABLE_NAME>=<VALUE>"
 ```
 
@@ -161,48 +97,47 @@ Example:
 terraform plan 05_deploy_configurable_web_server -var "server_port=8080"
 ```
 
-##### Using environment variables (TF_VAR_) #####
-And another way to provide a value is to use an environment variable `TF_VAR_<VARIABLE_NAME>`:
+#### Provide values using environment variables (`TF_VAR_*`) ####
 ```console
 export TF_VAR_<VARIABLE_NAME>=<VALUE>
+```
+
+Then run a command:
+```console
 terraform plan
 ```
 
+Or run a command with a location:
+
 ```console
-export TF_VAR_<VARIABLE_NAME>=<VALUE>
 terraform plan <DIR_OR_PLAN>
 ```
 
 Example:
 ```console
 export TF_VAR_server_port=8080
+```
+
+```console
 terraform plan 05_deploy_configurable_web_server
 ```
 
-#### Output variables ####
-We can also define an `output` variable:
-```hcl
-output "<NAME>" {
-	value = <VALUE>
-	[<CONFIG> ...]
-}
-```
+#### Display an output ####
+You must run `terraform apply` first before running any of the following commands:
 
-The body of the `output` declaration (`<CONFIG`) has two parameters:
-
-| Parameter | Description |
-|---------- |-|
-| *description*    | A description of the type of the output |
-| *sensitive* | If this parameter is set to true, Terraform will not log this output |
-
-After adding an `output` and running `terraform apply`, we can use the following command to display the `output`
 ```console
 terraform output
+```
+
+```console
 terraform output <OUTPUT_NAME>
 ```
 
 For example
 ```console
 terraform apply v06_add_output
+```
+
+```console
 terraform output public_ip
 ```
