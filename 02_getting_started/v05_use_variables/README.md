@@ -3,7 +3,7 @@
 In this chapter, we are going to use variables `variable` and `output`
 
 #### Input variables (`variable`) ####
-To define an input variable, use the following syntax:
+To define an input `variable`, use the following syntax:
 ```hcl
 variable "<NAME>" {
   [<CONFIG> ...]
@@ -82,8 +82,8 @@ variable "object_example" {
 Define a variable `server_port` for our `main.tf`:
 ```hcl
 variable "server_port" {
-	description = "The port to be used for HTTP requests"
-	type = number
+  description = "The port to be used for HTTP requests"
+  type = number
 }
 ```
 
@@ -103,7 +103,7 @@ terraform plan
 ```
 
 To avoid using CLI arguments everytime running `terraform apply` or `terraform plan`, specify a `default` value:
-```console
+```hcl
 variable "server_port" {
 	description = "The port to be used for HTTP requests"
 	type = number

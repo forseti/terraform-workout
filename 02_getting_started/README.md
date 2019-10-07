@@ -83,7 +83,7 @@ digraph {
 The `digraph` value can be visualized in an online tool like [GraphvizOnline](http://dreampuf.github.io/GraphvizOnline/)
 
 
-#### Provide values using `-var` ####
+#### Provide an input variable using `-var` ####
 ```console
 terraform plan -var "<VARIABLE_NAME>=<VALUE>"
 ```
@@ -97,7 +97,7 @@ Example:
 terraform plan 05_deploy_configurable_web_server -var "server_port=8080"
 ```
 
-#### Provide values using environment variables (`TF_VAR_*`) ####
+#### Provide an input variable using environment variables (`TF_VAR_*`) ####
 ```console
 export TF_VAR_<VARIABLE_NAME>=<VALUE>
 ```
@@ -122,7 +122,7 @@ export TF_VAR_server_port=8080
 terraform plan 05_deploy_configurable_web_server
 ```
 
-#### Display an output ####
+#### Display an output variable ####
 You must run `terraform apply` first before running any of the following commands:
 
 ```console
@@ -133,7 +133,7 @@ terraform output
 terraform output <OUTPUT_NAME>
 ```
 
-For example
+Example:
 ```console
 terraform apply v06_add_output
 ```
