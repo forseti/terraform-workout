@@ -1,6 +1,6 @@
-#### v06_auto_scaling_and_load_balancer ####
+#### v06_auto_scaling ####
 
-We will learn to use *Auto Scaling Group* and *Elastic Load Balancer*
+We will learn to use *Auto Scaling Group*
 
 Replace our `aws_instance` resource with the following `aws_launch_configuration`:
 ```hcl

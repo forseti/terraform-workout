@@ -13,7 +13,7 @@ variable "<NAME>" {
 The body of the `variable` declaration (`<CONFIG`) has three parameters:
 
 | Parameter | Description |
-|---------- |-|
+|---|---|
 | *description*    | A description on how a variable is used |
 | *type* | The *type constraints* of a variable |
 | *default* | There are two ways to provide a value for a variable, `-var`, `-var-file`, and an environment variable `TF_FAR_<VARIABLE_NAME>`. If no value is passed in, the variable will fall back to this default value | 
@@ -167,7 +167,7 @@ output "<NAME>" {
 The body of the `output` declaration (`<CONFIG`) has two parameters:
 
 | Parameter | Description |
-|---------- |-|
+|---|---|
 | *description*    | A description of the type of the output |
 | *sensitive* | If this parameter is set to true, Terraform will not log this output |
 
