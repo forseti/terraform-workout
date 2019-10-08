@@ -27,7 +27,7 @@ resource "<PROVIDER>_<TYPE>" "<NAME>" {
 
 Define an `aws_instance` resource in `main.tf`:
 ```hcl
-resource "aws_instance" "example-i" {
+resource "aws_instance" "example" {
 	ami = "ami-0c55b159cbfafe1f0"
 	instance_type = "t2.micro"
 }

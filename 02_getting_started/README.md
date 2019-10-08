@@ -67,13 +67,13 @@ digraph {
         compound = "true"
         newrank = "true"
         subgraph "root" {
-                "[root] aws_instance.example-i" [label = "aws_instance.example-i", shape = "box"]
-                "[root] aws_security_group.example-sg" [label = "aws_security_group.example-sg", shape = "box"]
+                "[root] aws_instance.example" [label = "aws_instance.example", shape = "box"]
+                "[root] aws_security_group.instance" [label = "aws_security_group.instance", shape = "box"]
                 "[root] provider.aws" [label = "provider.aws", shape = "diamond"]
-                "[root] aws_instance.example-i" -> "[root] aws_security_group.example-sg"
-                "[root] aws_security_group.example-sg" -> "[root] provider.aws"
-                "[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_instance.example-i"
-                "[root] provider.aws (close)" -> "[root] aws_instance.example-i"
+                "[root] aws_instance.example" -> "[root] aws_security_group.instance"
+                "[root] aws_security_group.instance" -> "[root] provider.aws"
+                "[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_instance.example"
+                "[root] provider.aws (close)" -> "[root] aws_instance.example"
                 "[root] root" -> "[root] meta.count-boundary (EachMode fixup)"
                 "[root] root" -> "[root] provider.aws (close)"
         }

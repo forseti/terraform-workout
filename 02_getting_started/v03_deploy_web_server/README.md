@@ -1,5 +1,5 @@
 #### v03_deploy_web_server ####
-Add the web server using `user_data` to our EC2 instance, `example-i`:
+Add the web server using `user_data` to our EC2 instance, `example`:
 ```
 user_data = <<-EOF
             #!/bin/bash
@@ -11,7 +11,7 @@ user_data = <<-EOF
 
 After the edit:
 ```hcl
-resource "aws_instance" "example-i" {
+resource "aws_instance" "example" {
 	ami = "ami-0c55b159cbfafe1f0"
 	instance_type = "t2.micro"
 
@@ -22,15 +22,15 @@ resource "aws_instance" "example-i" {
                 EOF
 	
 	tags = {
-		Name = "terraform-example-instance"
+		Name = "example-instance"
 	}
 }
 ```
 
 Create a *security group* to allow inbound traffic *8080*
 ```hcl
-resource "aws_security_group" "example-sg" {
-  name = "terraform-example-sg"
+resource "aws_security_group" "instance" {
+  name = "security-group-for-ec2-instance"
 
   ingress {
     from_port = 8080
@@ -41,18 +41,18 @@ resource "aws_security_group" "example-sg" {
 }
 ```
 
-Next, use *resource attribute reference* so that our EC2 instance, `example-i`, can refer to our *security group* resource. The syntax:
+Next, use *resource attribute reference* so that our EC2 instance, `example`, can refer to our *security group* resource. The syntax:
 ```hcl
 <PROVIDER>_<TYPE>.<NAME>.<ATTRIBUTE>
 ```
 
 After the edit:
 ```hcl
-resource "aws_instance" "example-i" {
+resource "aws_instance" "example" {
 	ami = "ami-0c55b159cbfafe1f0"
 	instance_type = "t2.micro"
 
-	vpc_security_group_ids = [aws_security_group.example-sg.id]
+	vpc_security_group_ids = [aws_security_group.instance.id]
 
 	user_data = <<-EOF
                 #!/bin/bash
@@ -61,7 +61,7 @@ resource "aws_instance" "example-i" {
                 EOF
 	
 	tags = {
-		Name = "terraform-example-instance"
+		Name = "example-instance"
 	}
 }
 ```
