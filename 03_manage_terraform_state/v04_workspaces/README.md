@@ -1,4 +1,4 @@
-#### v03_workspaces ####
+#### v04_workspaces ####
 
 Terraform starts with a single workspace called *default*. And to create a new workspace or switch between workspaces we can use `terraform workspace` commands.
 

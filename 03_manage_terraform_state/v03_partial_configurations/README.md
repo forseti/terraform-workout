@@ -1,4 +1,4 @@
-#### v02_partial_configurations ####
+#### v03_partial_configurations ####
 
 Currently, the S3 bucket name and DynamoDB table name are hardcoded in `backend` our Terraform main configuration (`main.tf`)
 
