@@ -22,4 +22,4 @@ terraform {
 }
 ```
 
-Then run `terraform init` to instruct Terraform to store the state file in S3 bucket.
+Then run `terraform init` and `terraform apply` to instruct Terraform to store the state file in S3 bucket.
