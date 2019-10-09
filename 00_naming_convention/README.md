@@ -1,4 +1,4 @@
-### 00_abbreviations_and_acronyms ###
+### 00_naming_convention ###
 
 This page is to document my preferred naming convention for cloud/infrastructure components in Terraform.
 
