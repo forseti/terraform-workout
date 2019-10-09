@@ -68,10 +68,10 @@ digraph {
         newrank = "true"
         subgraph "root" {
                 "[root] aws_instance.example" [label = "aws_instance.example", shape = "box"]
-                "[root] aws_security_group.instance" [label = "aws_security_group.instance", shape = "box"]
+                "[root] aws_security_group.inst" [label = "aws_security_group.inst", shape = "box"]
                 "[root] provider.aws" [label = "provider.aws", shape = "diamond"]
-                "[root] aws_instance.example" -> "[root] aws_security_group.instance"
-                "[root] aws_security_group.instance" -> "[root] provider.aws"
+                "[root] aws_instance.example" -> "[root] aws_security_group.inst"
+                "[root] aws_security_group.inst" -> "[root] provider.aws"
                 "[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_instance.example"
                 "[root] provider.aws (close)" -> "[root] aws_instance.example"
                 "[root] root" -> "[root] meta.count-boundary (EachMode fixup)"

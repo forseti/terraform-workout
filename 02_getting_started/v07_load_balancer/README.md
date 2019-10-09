@@ -22,17 +22,17 @@ ALB has several parts.
 
 Start by creating the ALB using `aws_lb` resource:
 ```hcl
-resource "aws_lb" "example-lb" {
-  name = "terraform-example-lb"
+resource "aws_lb" "example" {
+  name = "alb-for-example-ec2-inst"
   load_balancer_type = "application"
-  subnets = data.aws_subnet_ids.subnet-d.ids
+  subnets = data.aws_subnet_ids.default.ids
 }
 ```
 
-Next, create a listener for ALB using `aws_lb_listener`:
+Next, create an HTTP listener for ALB using `aws_lb_listener`:
 ```hcl
-resource "aws_lb_listener" "example-lb-l" {
-  load_balancer_arn = aws_lb.example-lb.arn
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.example.arn
   port = 80
   protocol = "HTTP"
 
@@ -51,8 +51,8 @@ resource "aws_lb_listener" "example-lb-l" {
 
 By default, all AWS resources, including ALBs, don't allow any inbound/outbound traffic. So we need to create a new security group for our ALB:
 ```hcl
-resource "aws_security_group" "example-lb-sg" {
-  name = "terraform-example-lb-sg"
+resource "aws_security_group" "alb" {
+  name = "sg-for-alb"
 
   # Allow inbound HTTP requests
   ingress {
@@ -74,21 +74,21 @@ resource "aws_security_group" "example-lb-sg" {
 
 Then, we want to add the new *security group* to our ALB:
 ```hcl
-resource "aws_lb" "example-lb" {
-  name = "terraform-example-lb"
+resource "aws_lb" "example" {
+  name = "alb-for-example-ec2-inst"
   load_balancer_type = "application"
-  subnets = data.aws_subnet_ids.subnet-d.ids
-  security_groups = [aws_security_group.example-lb-sg.id]
+  subnets = data.aws_subnet_ids.default.ids
+  security_groups = [aws_security_group.alb.id]
 }
 ```
 
 Next is to create a target group for our *auto scaling group*, using `aws_alb_target_group`:
 ```hcl
-resource "aws_lb_target_group" "example-lb-tg" {
-  name = "terraform-example-lb-tg"
+resource "aws_lb_target_group" "asg" {
+  name = "tg-for-asg"
   port = var.server_port
   protocol = "HTTP"
-  vpc_id = data.aws_vpc.vpc-d.id
+  vpc_id = data.aws_vpc.default.id
 
   health_check {
     path = "/"
@@ -104,11 +104,11 @@ resource "aws_lb_target_group" "example-lb-tg" {
 
 Add the target group to our *auto scaling group*. By default, `health_check_type` is `EC2`, and we want to set it to `ELB`:
 ```hcl
-resource "aws_autoscaling_group" "example-asg" {
-  launch_configuration = aws_launch_configuration.example-lc.name
-  vpc_zone_identifier = data.aws_subnet_ids.subnet-d.ids
+resource "aws_autoscaling_group" "example" {
+  launch_configuration = aws_launch_configuration.example.name
+  vpc_zone_identifier = data.aws_subnet_ids.default.ids
 
-  target_group_arns = [aws_lb_target_group.example-lb-tg.arn]
+  target_group_arns = [aws_lb_target_group.asg.arn]
   health_check_type = "ELB"
 
   min_size = 2
@@ -116,7 +116,7 @@ resource "aws_autoscaling_group" "example-asg" {
 
   tag {
     key = "Name"
-    value = "terraform-example-asg"
+    value = "asg-for-example-ec2-inst"
     propagate_at_launch = true
   }
 }
@@ -124,8 +124,8 @@ resource "aws_autoscaling_group" "example-asg" {
 
 Finally, create a listener rule using `aws_lb_listener_rule`:
 ```hcl
-resource "aws_lb_listener_rule" "example-lb-lr" {
-  listener_arn = aws_lb_listener.example-lb-l.arn
+resource "aws_lb_listener_rule" "asg" {
+  listener_arn = aws_lb_listener.http.arn
   priority = 100
 
   condition {
@@ -135,7 +135,7 @@ resource "aws_lb_listener_rule" "example-lb-lr" {
 
   action {
     type = "forward"
-    target_group_arn = aws_lb_target_group.example-lb-tg.arn
+    target_group_arn = aws_lb_target_group.asg.arn
   }
 }
 ```
@@ -143,7 +143,7 @@ resource "aws_lb_listener_rule" "example-lb-lr" {
 We can add an `output` variable to show DNS of our ALB:
 ```hcl
 output "alb_dns_name" {
-  value = aws_lb.example-lb.dns_name
+  value = aws_lb.example.dns_name
   description = "The domain name of the load balancer"
 }
 ```

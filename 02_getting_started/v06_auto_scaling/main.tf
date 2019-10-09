@@ -8,8 +8,8 @@ variable "server_port" {
   default = 8080
 }
 
-resource "aws_security_group" "example-sg" {
-  name = "terraform-example-sg"
+resource "aws_security_group" "inst" {
+  name = "sg-for-ec2-inst"
 
   ingress {
     from_port = var.server_port
@@ -20,11 +20,11 @@ resource "aws_security_group" "example-sg" {
 }
 
 /*
-resource "aws_instance" "example-i" {
+resource "aws_instance" "example" {
   ami = "ami-0c55b159cbfafe1f0"
   instance_type = "t2.micro"
 
-  vpc_security_group_ids = [aws_security_group.example-sg.id]
+  vpc_security_group_ids = [aws_security_group.inst.id]
 
   user_data = <<-EOF
               #!/bin/bash
@@ -33,20 +33,20 @@ resource "aws_instance" "example-i" {
               EOF
 
   tags = {
-    Name = "terraform-example-instance"
+    Name = "example-ec2-inst"
   }
 }
 
 output "public_ip" {
-  value = aws_instance.example-i.public_ip
+  value = aws_instance.example.public_ip
   description = "The public IP address of the web server"
 }
 */
 
-resource "aws_launch_configuration" "example-lc" {
+resource "aws_launch_configuration" "example" {
   image_id = "ami-0c55b159cbfafe1f0"
   instance_type = "t2.micro"
-  security_groups = [aws_security_group.example-sg.id]
+  security_groups = [aws_security_group.inst.id]
 
   user_data = <<-EOF
               #!/bin/bash
@@ -61,24 +61,24 @@ resource "aws_launch_configuration" "example-lc" {
   }
 }
 
-data "aws_vpc" "vpc-d" {
+data "aws_vpc" "default" {
   default = true
 }
 
-data "aws_subnet_ids" "subnet-d" {
-  vpc_id = data.aws_vpc.vpc-d.id
+data "aws_subnet_ids" "default" {
+  vpc_id = data.aws_vpc.default.id
 }
 
-resource "aws_autoscaling_group" "example-asg" {
-  launch_configuration = aws_launch_configuration.example-lc.name
-  vpc_zone_identifier = data.aws_subnet_ids.subnet-d.ids
+resource "aws_autoscaling_group" "example" {
+  launch_configuration = aws_launch_configuration.example.name
+  vpc_zone_identifier = data.aws_subnet_ids.default.ids
 
   min_size = 2
   max_size = 10
 
   tag {
     key = "Name"
-    value = "terraform-asg-example"
+    value = "asg-for-example-ec2-inst"
     propagate_at_launch = true
   }
 }

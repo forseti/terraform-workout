@@ -119,8 +119,8 @@ var.<VARIABLE_NAME>
 
 Apply the variable to `from_port` and `to_port` in our *security group*, `example-sg`
 ```hcl
-resource "aws_security_group" "example-sg" {
-  name = "terraform-example-sg"
+resource "aws_security_group" "inst" {
+  name = "sg-for-ec2-inst"
 
   ingress {
     from_port = var.server_port
@@ -137,11 +137,11 @@ ${VARIABLE_NAME}
 ```
 
 ```hcl
-resource "aws_instance" "example-i" {
+resource "aws_instance" "example" {
   ami = "ami-0c55b159cbfafe1f0"
   instance_type = "t2.micro"
 
-  vpc_security_group_ids = [aws_security_group.example-sg.id]
+  vpc_security_group_ids = [aws_security_group.inst.id]
 
   user_data = <<-EOF
               #!/bin/bash
@@ -150,7 +150,7 @@ resource "aws_instance" "example-i" {
               EOF
 
   tags = {
-    Name = "terraform-example-instance"
+    Name = "example-ec2-inst"
   }
 }
 ```
@@ -175,7 +175,7 @@ The body of the `output` declaration (`<CONFIG`) has two parameters:
 Add an `output` variable to our `main.tf`:
 ```hcl
 output "public_ip" {
-  value = aws_instance.example-i.public_ip
+  value = aws_instance.example.public_ip
   description = "The public IP address of the web server"
 }
 ```

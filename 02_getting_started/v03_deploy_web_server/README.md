@@ -22,15 +22,15 @@ resource "aws_instance" "example" {
                 EOF
 	
 	tags = {
-		Name = "example-instance"
+		Name = "example-inst"
 	}
 }
 ```
 
 Create a *security group* to allow inbound traffic *8080*
 ```hcl
-resource "aws_security_group" "instance" {
-  name = "security-group-for-ec2-instance"
+resource "aws_security_group" "inst" {
+  name = "sg-for-ec2-inst"
 
   ingress {
     from_port = 8080
@@ -52,7 +52,7 @@ resource "aws_instance" "example" {
 	ami = "ami-0c55b159cbfafe1f0"
 	instance_type = "t2.micro"
 
-	vpc_security_group_ids = [aws_security_group.instance.id]
+	vpc_security_group_ids = [aws_security_group.inst.id]
 
 	user_data = <<-EOF
                 #!/bin/bash
@@ -61,7 +61,7 @@ resource "aws_instance" "example" {
                 EOF
 	
 	tags = {
-		Name = "example-instance"
+		Name = "example-ec2-inst"
 	}
 }
 ```
