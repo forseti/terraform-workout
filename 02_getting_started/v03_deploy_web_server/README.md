@@ -30,7 +30,7 @@ resource "aws_instance" "example" {
 Create a *security group* to allow inbound traffic *8080*
 ```hcl
 resource "aws_security_group" "inst" {
-  name = "sg-for-ec2-inst"
+  name = "ec2-inst-sg"
 
   ingress {
     from_port = 8080

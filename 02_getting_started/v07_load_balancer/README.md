@@ -23,7 +23,7 @@ ALB has several parts.
 Start by creating the ALB using `aws_lb` resource:
 ```hcl
 resource "aws_lb" "example" {
-  name = "alb-for-example-ec2-inst"
+  name = "example-ec2-inst-alb"
   load_balancer_type = "application"
   subnets = data.aws_subnet_ids.default.ids
 }
@@ -52,7 +52,7 @@ resource "aws_lb_listener" "http" {
 By default, all AWS resources, including ALBs, don't allow any inbound/outbound traffic. So we need to create a new security group for our ALB:
 ```hcl
 resource "aws_security_group" "alb" {
-  name = "sg-for-alb"
+  name = "alb-sg"
 
   # Allow inbound HTTP requests
   ingress {
@@ -75,7 +75,7 @@ resource "aws_security_group" "alb" {
 Then, we want to add the new *security group* to our ALB:
 ```hcl
 resource "aws_lb" "example" {
-  name = "alb-for-example-ec2-inst"
+  name = "example-ec2-inst-alb"
   load_balancer_type = "application"
   subnets = data.aws_subnet_ids.default.ids
   security_groups = [aws_security_group.alb.id]
@@ -85,7 +85,7 @@ resource "aws_lb" "example" {
 Next is to create a target group for our *auto scaling group*, using `aws_alb_target_group`:
 ```hcl
 resource "aws_lb_target_group" "asg" {
-  name = "tg-for-asg"
+  name = "asg-tg"
   port = var.server_port
   protocol = "HTTP"
   vpc_id = data.aws_vpc.default.id
@@ -116,7 +116,7 @@ resource "aws_autoscaling_group" "example" {
 
   tag {
     key = "Name"
-    value = "asg-for-example-ec2-inst"
+    value = "example-ec2-inst-asg"
     propagate_at_launch = true
   }
 }

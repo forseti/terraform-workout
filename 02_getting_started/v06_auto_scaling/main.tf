@@ -9,7 +9,7 @@ variable "server_port" {
 }
 
 resource "aws_security_group" "inst" {
-  name = "sg-for-ec2-inst"
+  name = "ec2-inst-sg"
 
   ingress {
     from_port = var.server_port
@@ -78,7 +78,7 @@ resource "aws_autoscaling_group" "example" {
 
   tag {
     key = "Name"
-    value = "asg-for-example-ec2-inst"
+    value = "example-ec2-inst-asg"
     propagate_at_launch = true
   }
 }

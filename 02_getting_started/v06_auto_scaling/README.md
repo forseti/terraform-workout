@@ -29,7 +29,7 @@ resource "aws_autoscaling_group" "example" {
 
   tag {
     key = "Name"
-    value = "asg-for-example-ec2-inst"
+    value = "example-ec2-inst-asg"
     propagate_at_launch = true
   }
 }
@@ -99,7 +99,7 @@ resource "aws_autoscaling_group" "example" {
 
   tag {
     key = "Name"
-    value = "asg-for-example-ec2-inst"
+    value = "example-ec2-inst-asg"
     propagate_at_launch = true
   }
 }

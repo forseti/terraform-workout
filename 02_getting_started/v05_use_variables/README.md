@@ -120,7 +120,7 @@ var.<VARIABLE_NAME>
 Apply the variable to `from_port` and `to_port` in our *security group*, `example-sg`
 ```hcl
 resource "aws_security_group" "inst" {
-  name = "sg-for-ec2-inst"
+  name = "ec2-inst-sg"
 
   ingress {
     from_port = var.server_port

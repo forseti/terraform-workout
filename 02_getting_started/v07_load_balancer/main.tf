@@ -9,7 +9,7 @@ variable "server_port" {
 }
 
 resource "aws_security_group" "inst" {
-  name = "sg-for-ec2-inst"
+  name = "ec2-inst-sg"
 
   ingress {
     from_port = var.server_port
@@ -46,7 +46,7 @@ data "aws_subnet_ids" "default" {
 }
 
 resource "aws_security_group" "alb" {
-  name = "sg-for-alb"
+  name = "alb-sg"
 
   # Allow inbound HTTP requests
   ingress {
@@ -66,7 +66,7 @@ resource "aws_security_group" "alb" {
 }
 
 resource "aws_lb" "example" {
-  name = "alb-for-example-ec2-inst"
+  name = "example-ec2-inst-alb"
   load_balancer_type = "application"
   subnets = data.aws_subnet_ids.default.ids
   security_groups = [aws_security_group.alb.id]
@@ -90,10 +90,10 @@ resource "aws_lb_listener" "http" {
 }
 
 resource "aws_lb_target_group" "asg" {
-  name = "tg-for-asg"
+  name = "asg-tg"
   port = var.server_port
   protocol = "HTTP"
-  vpc_id = data.aws_vpc.vpc-d.id
+  vpc_id = data.aws_vpc.default.id
 
   health_check {
     path = "/"
@@ -118,7 +118,7 @@ resource "aws_autoscaling_group" "example" {
 
   tag {
     key = "Name"
-    value = "asg-for-example-ec2-inst"
+    value = "example-ec2-inst-asg"
     propagate_at_launch = true
   }
 }

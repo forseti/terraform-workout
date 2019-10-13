@@ -9,7 +9,7 @@ variable "server_port" {
 }
 
 resource "aws_security_group" "inst" {
-  name = "sg-for-ec2-inst"
+  name = "ec2-inst-sg"
 
   ingress {
     from_port = var.server_port
